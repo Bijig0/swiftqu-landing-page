@@ -51,8 +51,22 @@ const EmailForm = (props: Props) => {
       setValidationFailed(false);
     }
 
+    const sendEmail = async (inputs: any) => {
+      const templateParams = {
+        to_name: 'Brady',
+        from_name: 'Tutoring',
+        subject: 'New Tutoring Person From Contact us',
+        message: `New From Contact Us, details: ${JSON.stringify(inputs)}`,
+      };
+
+      const serviceId = 'service_010xydf';
+      const templateName = 'template_1dcm4rn';
+      const publicKey = 'Yd6r5t5etWEKD3GNh';
+      return emailjs.send(serviceId, templateName, templateParams, publicKey);
+    };
+
     try {
-      const response = await emailjs.sendForm('service_svuswb5', 'template_yknvvm8', form, '1QhUBMpFGH856b2Qr');
+      const response = await sendEmail(unsafeFormInfo);
       console.log({ response });
       setEmailJSResponse(response);
     } catch (error) {
